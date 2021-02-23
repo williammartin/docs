@@ -67,26 +67,24 @@ Having our dependencies defined, let's define some test Effect where we can chec
 {% tabs %}
 {% tab title="example.effect.ts" %}
 ```typescript
-import { r } from '@marblejs/core';
-import { mapTo } from 'rxjs/operators'; 
-import { pipe } from 'fp-ts/lib/function';
-import * as O from 'fp-ts/lib/Option';
-import { Dependency2Token } from './example';
+import { r } from "@marblejs/core"
+import { pipe } from "fp-ts/lib/function"
+import * as O from "fp-ts/lib/Option"
+import { mapTo } from "rxjs/operators"
+import { Dependency2Token } from "./example"
 
 export const example$ = r.pipe(
-  r.matchPath('/'),
-  r.matchType('GET'),
+  r.matchPath("/"),
+  r.matchType("GET"),
   r.useEffect((req$, ctx) => {
-  
     const dependency2 = pipe(
       ctx.ask(Dependency2Token),
-      O.getOrElse(() => ''),
-    );
-    
-    return req$.pipe(
-      mapTo({ body: dependency2 }),
-    ));
-  });
+      O.getOrElse(() => ""),
+    )
+
+    return req$.pipe(mapTo({ body: dependency2 }))
+  }),
+)
 ```
 {% endtab %}
 {% endtabs %}
